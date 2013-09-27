@@ -85,6 +85,7 @@ h2 {
 
 a {
 	text-decoration: none;
+	color: #3498db;
 }
 
 em {
@@ -274,7 +275,6 @@ footer .company p {
 a.more-link {
 	font-size: 12px;
 	padding-left: 10px;
-	color: #fe349f;
 	position: relative;
 	top: 5px;
 }

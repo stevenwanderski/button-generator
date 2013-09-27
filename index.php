@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>CSS Button Generator</title>
-  <link rel="stylesheet" href="js/colorpicker/css/colorpicker.css" type="text/css" />
-  <link rel="stylesheet" href="css/jquery.slider.css" type="text/css" />
+  <link rel="stylesheet" href="/js/colorpicker/css/colorpicker.css" type="text/css" />
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
   <link rel="stylesheet" href="/css/styles.css" />
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="js/colorpicker/js/colorpicker.js" type="text/javascript"></script>
-  <script src="js/jquery.slider.js" type="text/javascript"></script>
   <script src="js/scripts.js" type="text/javascript"></script>
 </head>
 <body>
@@ -328,8 +328,8 @@
               <div data-control-group="background">
                 <label for="background">background:</label>
                 <div class="radio-wrap">
-                  <input type="radio" name="background[]" value="" id="background-gradient" checked="checked"><label>gradient</label>
-                  <input type="radio" name="background[]" value="" id="background-solid"><label>solid</label>
+                  <input type="radio" name="background" value="" id="background-gradient" data-control-display="background-gradient" checked="checked"><label>gradient</label>
+                  <input type="radio" name="background" value="" id="background-solid" data-control-display="background-solid"><label>solid</label>
                   <div class="clear"></div>
                 </div>
               </div>
@@ -337,7 +337,7 @@
 
             <div data-control-group="background">
 
-              <div id="gradient-wrap">
+              <div id="gradient-wrap" data-control-display-group="background-gradient" data-control-display-selector="background">
                 <div class="form-wrap">
                   <label for="bg-start-gradient">start color:</label>
                   <input class="color" type="text" name="color" value="#fc3f94" id="bg-start-gradient">
@@ -351,7 +351,7 @@
                 </div>
               </div><!-- end #gradient-wrap -->
 
-              <div id="solid-wrap">
+              <div id="solid-wrap" data-control-display-group="background-solid" data-control-display-selector="background">
                 <div class="form-wrap">
                   <label for="bg-color">color:</label>
                   <input class="color" type="text" name="color" value="#cccccc" id="bg-color">
@@ -370,8 +370,8 @@
               <div data-control-group="hover-background">
                 <label for="background-hover">background:</label>
                 <div class="radio-wrap">
-                  <input type="radio" name="background-hover[]" value="" id="background-gradient-hover"><label>gradient</label>
-                  <input type="radio" name="background-hover[]" value="" id="background-solid-hover" checked="checked"><label>solid</label>
+                  <input type="radio" name="hover-background" value="" id="background-gradient-hover" data-control-display="hover-background-gradient"><label>gradient</label>
+                  <input type="radio" name="hover-background" value="" id="background-solid-hover" data-control-display="hover-background-solid" checked="checked"><label>solid</label>
                   <div class="clear"></div>
                 </div>
               </div>
@@ -379,7 +379,7 @@
 
             <div data-control-group="hover-background">
 
-              <div id="gradient-hover-wrap">
+              <div id="gradient-hover-wrap" data-control-display-group="hover-background-gradient" data-control-display-selector="hover-background">
                 <div class="form-wrap">
                   <label for="bg-start-gradient-hover">start color:</label>
                   <input class="color" type="text" name="color" value="#999999" id="bg-start-gradient-hover">
@@ -393,7 +393,7 @@
                 </div>
               </div><!-- end #gradient-wrap -->
 
-              <div id="solid-hover-wrap">
+              <div id="solid-hover-wrap" data-control-display-group="hover-background-solid" data-control-display-selector="hover-background">
                 <div class="form-wrap">
                   <label for="bg-color-hover">color:</label>
                   <input class="color" type="text" name="color" value="#e62097" id="bg-color-hover">
