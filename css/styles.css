@@ -93,7 +93,7 @@ em {
 	font-style: normal;
 }
 
-::selection {
+/*::selection {
 	background: #de3329;
 	color: #f7f4f0;
 }
@@ -101,7 +101,7 @@ em {
 	background: #de3329;
 	color: #f7f4f0;
 }
-
+*/
 .inner {
 	max-width: 1000px;
 	margin: 0 auto;
@@ -371,7 +371,7 @@ a.more-link {
 
 #styles-wrap pre {
 	padding-top: 16px;
-	font: 14px/18px MonacoishRegular;
+	font: 14px/18px Droid Sans Mono;
 	letter-spacing: 1px;
 }
 

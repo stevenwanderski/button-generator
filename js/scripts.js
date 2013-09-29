@@ -2,7 +2,7 @@ Button = {};
 Button.styles = [];
 Button.styles_markup = '';
 Button.styles_hover_markup = '';
-Button.pixel_properties = ['font-size', 'border-radius', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
+Button.pixel_properties = ['font-size', 'border-radius', 'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
 Button.gradient_properties = ['bg-start-gradient', 'bg-end-gradient'];
 
 $(function(){
@@ -68,8 +68,10 @@ Button.attach_handlers = function(){
 
   $('input, select').on('change keyup', function(){
     Button.update_styles();
+    if($(this).hasClass('slider-bound')){
+      $('#' + $(this).attr('id') + '-slider').slider('value', $(this).val());
+    }
   });
-
 }
 
 /**
@@ -82,7 +84,6 @@ Button.initialize_controls = function(){
   $('#settings-wrap [data-control-display]:checked').each(function(){
     Button.control_display_change($(this));
   });
-
 }
 
 /**
@@ -169,6 +170,7 @@ Button.prepare_styles = function(){
   });
 
   // remove the text data
+  $('.btn').html(Button.styles['text']);
   delete Button.styles['text'];
 
   // combine padding if all are present
@@ -177,7 +179,7 @@ Button.prepare_styles = function(){
      (padding_right = Button.styles['padding-right']) &&
      (padding_bottom = Button.styles['padding-bottom']) &&
      (padding_left = Button.styles['padding-left'])){
-    Button.styles['padding'] = padding_top + 'px ' + padding_right + 'px ' + padding_bottom + 'px ' + padding_left + 'px';
+    Button.styles['padding'] = padding_top + 'px ' + padding_right + 'px ' + padding_bottom + 'px ' + padding_left;
     delete Button.styles['padding-top'];
     delete Button.styles['padding-right'];
     delete Button.styles['padding-bottom'];
@@ -195,7 +197,49 @@ Button.prepare_styles = function(){
     delete Button.styles['border-width'];
   }
 
-  console.log(Button.styles);
+  // combine border-top styles
+  var border_top_style, border_top_color, border_top_width;
+  if((border_top_style = Button.styles['border-top-style']) &&
+     (border_top_color = Button.styles['border-top-color']) &&
+     (border_top_width = Button.styles['border-top-width'])){
+    Button.styles['border-top'] = border_top_style + ' ' + border_top_color + ' ' + border_top_width + 'px';
+    delete Button.styles['border-top-style'];
+    delete Button.styles['border-top-color'];
+    delete Button.styles['border-top-width'];
+  }
+
+  // combine border-right styles
+  var border_right_style, border_right_color, border_right_width;
+  if((border_right_style = Button.styles['border-right-style']) &&
+     (border_right_color = Button.styles['border-right-color']) &&
+     (border_right_width = Button.styles['border-right-width'])){
+    Button.styles['border-right'] = border_right_style + ' ' + border_right_color + ' ' + border_right_width + 'px';
+    delete Button.styles['border-right-style'];
+    delete Button.styles['border-right-color'];
+    delete Button.styles['border-right-width'];
+  }
+
+  // combine border-bottom styles
+  var border_bottom_style, border_bottom_color, border_bottom_width;
+  if((border_bottom_style = Button.styles['border-bottom-style']) &&
+     (border_bottom_color = Button.styles['border-bottom-color']) &&
+     (border_bottom_width = Button.styles['border-bottom-width'])){
+    Button.styles['border-bottom'] = border_bottom_style + ' ' + border_bottom_color + ' ' + border_bottom_width + 'px';
+    delete Button.styles['border-bottom-style'];
+    delete Button.styles['border-bottom-color'];
+    delete Button.styles['border-bottom-width'];
+  }
+
+  // combine border-left styles
+  var border_left_style, border_left_color, border_left_width;
+  if((border_left_style = Button.styles['border-left-style']) &&
+     (border_left_color = Button.styles['border-left-color']) &&
+     (border_left_width = Button.styles['border-left-width'])){
+    Button.styles['border-left'] = border_left_style + ' ' + border_left_color + ' ' + border_left_width + 'px';
+    delete Button.styles['border-left-style'];
+    delete Button.styles['border-left-color'];
+    delete Button.styles['border-left-width'];
+  }
 }
 
 /**
@@ -203,58 +247,88 @@ Button.prepare_styles = function(){
  */
 Button.generate_style_markup = function(){
 
-  // if gradients exist
+  // gradients
   var gradient_start, gradient_end;
   if((gradient_start = Button.styles['bg-start-gradient']) &&
      (gradient_end = Button.styles['bg-end-gradient'])){
-    Button.styles_markup += 'background-image: -webkit-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
-    Button.styles_markup += 'background-image: -moz-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
-    Button.styles_markup += 'background-image: -ms-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
-    Button.styles_markup += 'background-image: -o-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
-    Button.styles_markup += 'background-image: linear-gradient(to bottom, ' + gradient_start + ', ' + gradient_end + ');\n';
+    Button.styles_markup += Button.render_style_line('background-image', '-webkit-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
+    Button.styles_markup += Button.render_style_line('background-image', '-moz-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
+    Button.styles_markup += Button.render_style_line('background-image', '-ms-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
+    Button.styles_markup += Button.render_style_line('background-image', '-o-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
+    Button.styles_markup += Button.render_style_line('background-image', 'linear-gradient(to bottom, ' + gradient_start + ', ' + gradient_end + ')');
     delete Button.styles['bg-start-gradient'];
     delete Button.styles['bg-end-gradient'];
     delete Button.styles['bg-color'];
   }
 
-  // if gradient hovers exist
+  // gradient hovers
   var gradient_hover_start, gradient_hover_end;
   if((gradient_hover_start = Button.styles['bg-start-gradient-hover']) &&
      (gradient_hover_end = Button.styles['bg-end-gradient-hover'])){
-    Button.styles_hover_markup += 'background-image: -webkit-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
-    Button.styles_hover_markup += 'background-image: -moz-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
-    Button.styles_hover_markup += 'background-image: -ms-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
-    Button.styles_hover_markup += 'background-image: -o-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
-    Button.styles_hover_markup += 'background-image: linear-gradient(to bottom, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    Button.styles_hover_markup += Button.render_style_line('background-image', '-webkit-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
+    Button.styles_hover_markup += Button.render_style_line('background-image', '-moz-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
+    Button.styles_hover_markup += Button.render_style_line('background-image', '-ms-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
+    Button.styles_hover_markup += Button.render_style_line('background-image', '-o-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
+    Button.styles_hover_markup += Button.render_style_line('background-image', 'linear-gradient(to bottom, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
     delete Button.styles['bg-start-gradient-hover'];
     delete Button.styles['bg-end-gradient-hover'];
     delete Button.styles['background-hover'];
   }
 
+  // border radius
   var border_radius;
   if((border_radius = Button.styles['border-radius'])){
-    Button.styles_markup += '-webkit-border-radius: ' + border_radius + 'px;\n';
-    Button.styles_markup += '-moz-border-radius: ' + border_radius + 'px;\n';
-    Button.styles_markup += 'border-radius: ' + border_radius + 'px;\n';
+    Button.styles_markup += Button.render_style_line('-webkit-border-radius', border_radius);
+    Button.styles_markup += Button.render_style_line('-moz-border-radius', border_radius);
+    Button.styles_markup += Button.render_style_line('border-radius', border_radius);
     delete Button.styles['border-radius'];
+  }
+
+  // text shadow
+  var text_shadow_color, text_shadow_x, text_shadow_y, text_shadow_blur;
+  if((text_shadow_color = Button.styles['text-shadow-color']) &&
+     (text_shadow_x = Button.styles['text-shadow-x']) &&
+     (text_shadow_y = Button.styles['text-shadow-y']) &&
+     (text_shadow_blur = Button.styles['text-shadow-blur'])){
+    Button.styles_markup += Button.render_style_line('text-shadow', text_shadow_x + 'px ' + text_shadow_y + 'px ' + text_shadow_blur + 'px ' + text_shadow_color);
+    delete Button.styles['text-shadow-color'];
+    delete Button.styles['text-shadow-x'];
+    delete Button.styles['text-shadow-y'];
+    delete Button.styles['text-shadow-blur'];
+  }
+
+  // box shadow
+  var box_shadow_color, box_shadow_x, box_shadow_y, box_shadow_blur;
+  if((box_shadow_color = Button.styles['box-shadow-color']) &&
+     (box_shadow_x = Button.styles['box-shadow-x']) &&
+     (box_shadow_y = Button.styles['box-shadow-y']) &&
+     (box_shadow_blur = Button.styles['box-shadow-blur'])){
+    Button.styles_markup += Button.render_style_line('-webkit-box-shadow', box_shadow_x + 'px ' + box_shadow_y + 'px ' + box_shadow_blur + 'px ' + box_shadow_color);
+    Button.styles_markup += Button.render_style_line('-moz-box-shadow', box_shadow_x + 'px ' + box_shadow_y + 'px ' + box_shadow_blur + 'px ' + box_shadow_color);
+    Button.styles_markup += Button.render_style_line('box-shadow', box_shadow_x + 'px ' + box_shadow_y + 'px ' + box_shadow_blur + 'px ' + box_shadow_color);
+    delete Button.styles['box-shadow-color'];
+    delete Button.styles['box-shadow-x'];
+    delete Button.styles['box-shadow-y'];
+    delete Button.styles['box-shadow-blur'];
   }
 
   $.each(Button.styles, function(css_property, css_value){
     // check if "px" should appended to the style
     var px_value = $.inArray(css_property, Button.pixel_properties) > -1 ? 'px' : '';
-
-    Button.styles_markup += css_property + ': ' + css_value + px_value + ';\n';
+    var tab = '&nbsp;&nbsp;';
 
     // handle the hover background
     if(css_property == 'background-hover'){
-      Button.styles_hover_markup = 'background: ' + css_value + ';\n';
+      Button.styles_hover_markup = Button.render_style_line('background', css_value);
+    }else{
+      Button.styles_markup += Button.render_style_line(css_property, css_value);
     }
   });
 
   // wrap the style markups in proper css calls
-  Button.styles_markup = '.button {\n' + Button.styles_markup + '}';
+  Button.styles_markup = '.btn {\n' + Button.styles_markup + '}';
   if(Button.styles_hover_markup != ''){
-    Button.styles_hover_markup = '\n\n.button:hover {\n' + Button.styles_hover_markup + '}';
+    Button.styles_hover_markup = '\n\n.btn:hover {\n' + Button.styles_hover_markup + '}';
   }
 }
 
@@ -263,5 +337,17 @@ Button.generate_style_markup = function(){
  */
 Button.render_styles = function(){
   var output = Button.styles_markup + Button.styles_hover_markup;
+  var style_tag = '<style id="dynamic-styles" type="text/css">' + output + '</style>';
+  $('#dynamic-styles').replaceWith(style_tag);
   $('#css-display').html('<pre>' + output + '</pre>');
+}
+
+/**
+ * Renders an individual style line
+ */
+Button.render_style_line = function(css_property, css_value){
+  // check if "px" should appended to the style
+  var px_value = $.inArray(css_property, Button.pixel_properties) > -1 ? 'px' : '';
+  var tab = '&nbsp;&nbsp;';
+  return tab + css_property + ': ' + css_value + px_value + ';\n';
 }

@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>CSS Button Generator</title>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/js/colorpicker/css/colorpicker.css" type="text/css" />
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
   <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" id="dynamic-styles" />
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="js/colorpicker/js/colorpicker.js" type="text/javascript"></script>
@@ -16,11 +18,6 @@
   <header>
     <div class="inner cf">
       <div class="logo"><img src="/images/icon_star1.png" alt=""><a href="/">CSS Button Generator</a></div>
-      <nav class="clearfix">
-        <ul>
-          <li class="contact"><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
     </div>
   </header>
 
@@ -198,10 +195,10 @@
             </div>
 
             <div class="form-wrap">
-              <input type="checkbox" name="border-color-check" checked="checked" id="border-color-check" data-control="border" />
+              <input type="checkbox" name="border-color-check" id="border-color-check" data-control="border" />
               <div data-control-group="border">
                 <label for="border-color">border:</label>
-                <input class="color" type="text" name="border-color" value="#d91c71" id="border-color" max="60">
+                <input class="color" type="text" name="border-color" value="#1f628d" id="border-color" max="60">
                 <div class="color-view"></div>
               </div>
             </div>
@@ -340,13 +337,13 @@
               <div id="gradient-wrap" data-control-display-group="background-gradient" data-control-display-selector="background">
                 <div class="form-wrap">
                   <label for="bg-start-gradient">start color:</label>
-                  <input class="color" type="text" name="color" value="#fc3f94" id="bg-start-gradient">
+                  <input class="color" type="text" name="color" value="#3498db" id="bg-start-gradient">
                   <div class="color-view bg"></div>
                 </div>
 
                 <div class="form-wrap">
                   <label for="bg-end-gradient">end color:</label>
-                  <input class="color" type="text" name="color" value="#fc0574" id="bg-end-gradient">
+                  <input class="color" type="text" name="color" value="#2980b9" id="bg-end-gradient">
                   <div class="color-view bg"></div>
                 </div>
               </div><!-- end #gradient-wrap -->
@@ -354,7 +351,7 @@
               <div id="solid-wrap" data-control-display-group="background-solid" data-control-display-selector="background">
                 <div class="form-wrap">
                   <label for="background">color:</label>
-                  <input class="color" type="text" name="color" value="#cccccc" id="background">
+                  <input class="color" type="text" name="color" value="#3498db" id="background">
                   <div class="color-view bg"></div>
                 </div>
               </div>
@@ -370,8 +367,8 @@
               <div data-control-group="hover-background">
                 <label for="background-hover">background:</label>
                 <div class="radio-wrap">
-                  <input type="radio" name="hover-background" value="" id="background-gradient-hover" data-control-display="hover-background-gradient"><label>gradient</label>
-                  <input type="radio" name="hover-background" value="" id="background-solid-hover" data-control-display="hover-background-solid" checked="checked"><label>solid</label>
+                  <input type="radio" name="hover-background" value="" id="background-gradient-hover" data-control-display="hover-background-gradient" checked="checked"><label>gradient</label>
+                  <input type="radio" name="hover-background" value="" id="background-solid-hover" data-control-display="hover-background-solid"><label>solid</label>
                   <div class="clear"></div>
                 </div>
               </div>
@@ -382,13 +379,13 @@
               <div id="gradient-hover-wrap" data-control-display-group="hover-background-gradient" data-control-display-selector="hover-background">
                 <div class="form-wrap">
                   <label for="bg-start-gradient-hover">start color:</label>
-                  <input class="color" type="text" name="color" value="#999999" id="bg-start-gradient-hover">
+                  <input class="color" type="text" name="color" value="#3cb0fd" id="bg-start-gradient-hover">
                   <div class="color-view bg"></div>
                 </div>
 
                 <div class="form-wrap">
                   <label for="bg-end-gradient-hover">end color:</label>
-                  <input class="color" type="text" name="color" value="#000000" id="bg-end-gradient-hover">
+                  <input class="color" type="text" name="color" value="#3498db" id="bg-end-gradient-hover">
                   <div class="color-view bg"></div>
                 </div>
               </div><!-- end #gradient-wrap -->
@@ -396,7 +393,7 @@
               <div id="solid-hover-wrap" data-control-display-group="hover-background-solid" data-control-display-selector="hover-background">
                 <div class="form-wrap">
                   <label for="background-hover">color:</label>
-                  <input class="color" type="text" name="color" value="#e62097" id="background-hover">
+                  <input class="color" type="text" name="color" value="#3cb0fd" id="background-hover">
                   <div class="color-view bg"></div>
                 </div>
               </div>
@@ -412,7 +409,7 @@
       <div id="button-wrap">
         <h2>Button preview</h2>
         <div id="button-wrap-inner">
-          <a class="button" href="">Click me</a>
+          <a class="btn" href="">Click me</a>
         </div><!-- end button-wrap-inner -->
       </div><!-- end button-wrap -->
 
@@ -420,10 +417,6 @@
         <h2>CSS code</h2>
         <div id="styles-wrap-inner">
           <div id="css-display"></div>
-          <div id="ie-styles-wrap">
-            <input type="checkbox" name="ie-styles" value="" id="ie-styles" />
-            <label for="ie-styles">include IE styles</label>
-          </div>
         </div><!-- end styles-wrap-inner -->
       </div><!-- end styles-wrap -->
 
@@ -439,7 +432,7 @@
 
       <div class="left community">
         <h4>bxCommunity</h4>
-        <p><a href="http://bxslider.com" target="_blank">bxslider.com</a> <span class="bullet">&bull;</span> <a href="http://bxcollective.com">bxcollective.com</a> <span class="bullet">&bull;</span> <a href="http://css3buttongenerator.com">css3buttongenerator.com</a></p>
+        <p><a href="http://bxslider.com" target="_blank">bxslider.com</a> <span class="bullet">&bull;</span> <a href="http://bxcreative.com">bxcreative</a> <span class="bullet">&bull;</span> <a href="http://bxcollective.com">bxcollective.com</a></p>
       </div>
     </div>
   </footer>
