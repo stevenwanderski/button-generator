@@ -4,6 +4,7 @@ Button.styles_markup = '';
 Button.styles_hover_markup = '';
 Button.pixel_properties = ['font-size', 'border-radius', 'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
 Button.gradient_properties = ['bg-start-gradient', 'bg-end-gradient'];
+Button.input_focus = '';
 
 $(function(){
 
@@ -71,6 +72,39 @@ Button.attach_handlers = function(){
     if($(this).hasClass('slider-bound')){
       $('#' + $(this).attr('id') + '-slider').slider('value', $(this).val());
     }
+  });
+
+  $('.color').focus(function(e) {
+    Button.input_focus = $(this);
+  });
+
+  // open the color picker when the color preview is clicked
+  $('.color-view').click(function(){
+    Button.input_focus = $(this).prev();
+    $(this).prev().ColorPickerShow();
+  });
+
+  // initialize the color picker
+  $('.color').ColorPicker({
+    onSubmit: function(hsb, hex, rgb, el){
+      // hide the color picker
+      $(el).ColorPickerHide();
+      $(el).val('#'+hex);
+    },
+    onBeforeShow: function (){
+      $(this).ColorPickerSetColor(this.value);
+    },
+    onChange: function(hsb, hex, rgb, el){
+      // populate the input with the hex value
+      Button.input_focus.val('#'+hex);
+      // update the color preview
+      Button.input_focus.next('.color-view').css('backgroundColor', '#'+hex);
+      Button.update_styles();
+    }
+  });
+
+  $('.btn').click(function(e){
+    e.preventDefault();
   });
 }
 
@@ -337,6 +371,7 @@ Button.generate_style_markup = function(){
  */
 Button.render_styles = function(){
   var output = Button.styles_markup + Button.styles_hover_markup;
+  console.log(output);
   var style_tag = '<style id="dynamic-styles" type="text/css">' + output + '</style>';
   $('#dynamic-styles').replaceWith(style_tag);
   $('#css-display').html('<pre>' + output + '</pre>');
@@ -348,6 +383,6 @@ Button.render_styles = function(){
 Button.render_style_line = function(css_property, css_value){
   // check if "px" should appended to the style
   var px_value = $.inArray(css_property, Button.pixel_properties) > -1 ? 'px' : '';
-  var tab = '&nbsp;&nbsp;';
+  var tab = '  ';
   return tab + css_property + ': ' + css_value + px_value + ';\n';
 }

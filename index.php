@@ -6,11 +6,13 @@
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/js/colorpicker/css/colorpicker.css" type="text/css" />
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/css/spectrum.css"> -->
   <link rel="stylesheet" href="/css/styles.css" />
   <link rel="stylesheet" id="dynamic-styles" />
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="js/colorpicker/js/colorpicker.js" type="text/javascript"></script>
+  <!-- <script src="js/spectrum.js"></script> -->
   <script src="js/scripts.js" type="text/javascript"></script>
 </head>
 <body>
