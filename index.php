@@ -53,8 +53,8 @@
             <div class="form-wrap">
               <input type="checkbox" name="font-color-check" checked="checked" id="font-color-check" data-control="font-color" />
               <div data-control-group="font-color">
-                <label for="font-color">font-color:</label>
-                <input class="color" type="text" name="font-color" value="#ffffff" id="font-color">
+                <label for="color">font-color:</label>
+                <input class="color" type="text" name="font-color" value="#ffffff" id="color">
                 <div class="color-view bg"></div>
               </div>
             </div>
@@ -353,8 +353,8 @@
 
               <div id="solid-wrap" data-control-display-group="background-solid" data-control-display-selector="background">
                 <div class="form-wrap">
-                  <label for="bg-color">color:</label>
-                  <input class="color" type="text" name="color" value="#cccccc" id="bg-color">
+                  <label for="background">color:</label>
+                  <input class="color" type="text" name="color" value="#cccccc" id="background">
                   <div class="color-view bg"></div>
                 </div>
               </div>
@@ -395,8 +395,8 @@
 
               <div id="solid-hover-wrap" data-control-display-group="hover-background-solid" data-control-display-selector="hover-background">
                 <div class="form-wrap">
-                  <label for="bg-color-hover">color:</label>
-                  <input class="color" type="text" name="color" value="#e62097" id="bg-color-hover">
+                  <label for="background-hover">color:</label>
+                  <input class="color" type="text" name="color" value="#e62097" id="background-hover">
                   <div class="color-view bg"></div>
                 </div>
               </div>

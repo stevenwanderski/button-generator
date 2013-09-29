@@ -1,5 +1,9 @@
 Button = {};
 Button.styles = [];
+Button.styles_markup = '';
+Button.styles_hover_markup = '';
+Button.pixel_properties = ['font-size', 'border-radius', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left'];
+Button.gradient_properties = ['bg-start-gradient', 'bg-end-gradient'];
 
 $(function(){
 
@@ -114,8 +118,10 @@ Button.control_update = function(el){
 Button.control_display_change = function(el){
   var control = el.attr('data-control-display');
   var display_selector = el.attr('name');
-  $('[data-control-display-selector="' + display_selector + '"]').hide();
-  $('[data-control-display-group="' + control + '"]').show();
+  $('[data-control-display-selector="' + display_selector + '"]').addClass('hidden').hide();
+  $('[data-control-display-group="' + control + '"]').removeClass('hidden').show();
+  Button.enable_control($('[data-control-display-group="' + control + '"]'));
+  Button.disable_control($('[data-control-display-selector="' + display_selector + '"].hidden'));
 }
 
 /**
@@ -144,23 +150,118 @@ Button.enable_control = function(el){
  * Update the array that stores all css values
  */
 Button.update_styles = function(){
+  Button.prepare_styles();
+  Button.generate_style_markup();
+  Button.render_styles();
+}
+
+/**
+ * Prepares the raw style data for css presentation (removes, combines, etc..)
+ */
+Button.prepare_styles = function(){
   Button.styles = {};
+  Button.styles_markup = '';
+  Button.styles_hover_markup = '';
+
   $('input[type="text"], select').not(':disabled').each(function(){
     var css_property = $(this).attr('id');
     Button.styles[css_property] = $(this).val();
   });
+
+  // remove the text data
+  delete Button.styles['text'];
+
+  // combine padding if all are present
+  var padding_top, padding_right, padding_bottom, padding_left;
+  if((padding_top = Button.styles['padding-top']) &&
+     (padding_right = Button.styles['padding-right']) &&
+     (padding_bottom = Button.styles['padding-bottom']) &&
+     (padding_left = Button.styles['padding-left'])){
+    Button.styles['padding'] = padding_top + 'px ' + padding_right + 'px ' + padding_bottom + 'px ' + padding_left + 'px';
+    delete Button.styles['padding-top'];
+    delete Button.styles['padding-right'];
+    delete Button.styles['padding-bottom'];
+    delete Button.styles['padding-left'];
+  }
+
+  // combine border styles
+  var border_style, border_color, border_width;
+  if((border_style = Button.styles['border-style']) &&
+     (border_color = Button.styles['border-color']) &&
+     (border_width = Button.styles['border-width'])){
+    Button.styles['border'] = border_style + ' ' + border_color + ' ' + border_width + 'px';
+    delete Button.styles['border-style'];
+    delete Button.styles['border-color'];
+    delete Button.styles['border-width'];
+  }
+
   console.log(Button.styles);
-  Button.render_styles();
+}
+
+/**
+ * Populates the Button.styles_markup property with the renderable string
+ */
+Button.generate_style_markup = function(){
+
+  // if gradients exist
+  var gradient_start, gradient_end;
+  if((gradient_start = Button.styles['bg-start-gradient']) &&
+     (gradient_end = Button.styles['bg-end-gradient'])){
+    Button.styles_markup += 'background-image: -webkit-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
+    Button.styles_markup += 'background-image: -moz-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
+    Button.styles_markup += 'background-image: -ms-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
+    Button.styles_markup += 'background-image: -o-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ');\n';
+    Button.styles_markup += 'background-image: linear-gradient(to bottom, ' + gradient_start + ', ' + gradient_end + ');\n';
+    delete Button.styles['bg-start-gradient'];
+    delete Button.styles['bg-end-gradient'];
+    delete Button.styles['bg-color'];
+  }
+
+  // if gradient hovers exist
+  var gradient_hover_start, gradient_hover_end;
+  if((gradient_hover_start = Button.styles['bg-start-gradient-hover']) &&
+     (gradient_hover_end = Button.styles['bg-end-gradient-hover'])){
+    Button.styles_hover_markup += 'background-image: -webkit-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    Button.styles_hover_markup += 'background-image: -moz-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    Button.styles_hover_markup += 'background-image: -ms-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    Button.styles_hover_markup += 'background-image: -o-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    Button.styles_hover_markup += 'background-image: linear-gradient(to bottom, ' + gradient_hover_start + ', ' + gradient_hover_end + ');\n';
+    delete Button.styles['bg-start-gradient-hover'];
+    delete Button.styles['bg-end-gradient-hover'];
+    delete Button.styles['background-hover'];
+  }
+
+  var border_radius;
+  if((border_radius = Button.styles['border-radius'])){
+    Button.styles_markup += '-webkit-border-radius: ' + border_radius + 'px;\n';
+    Button.styles_markup += '-moz-border-radius: ' + border_radius + 'px;\n';
+    Button.styles_markup += 'border-radius: ' + border_radius + 'px;\n';
+    delete Button.styles['border-radius'];
+  }
+
+  $.each(Button.styles, function(css_property, css_value){
+    // check if "px" should appended to the style
+    var px_value = $.inArray(css_property, Button.pixel_properties) > -1 ? 'px' : '';
+
+    Button.styles_markup += css_property + ': ' + css_value + px_value + ';\n';
+
+    // handle the hover background
+    if(css_property == 'background-hover'){
+      Button.styles_hover_markup = 'background: ' + css_value + ';\n';
+    }
+  });
+
+  // wrap the style markups in proper css calls
+  Button.styles_markup = '.button {\n' + Button.styles_markup + '}';
+  if(Button.styles_hover_markup != ''){
+    Button.styles_hover_markup = '\n\n.button:hover {\n' + Button.styles_hover_markup + '}';
+  }
 }
 
 /**
  * Update the output of the css styles
  */
 Button.render_styles = function(){
-  var output = '';
-  $.each(Button.styles, function(css_property, css_value){
-    output += css_property + ': ' + css_value + ';<br />';
-  });
-  output = '<pre>.button {<br/>' + output + '}</pre>';
-  $('#css-display').html(output);
+  var output = Button.styles_markup + Button.styles_hover_markup;
+  $('#css-display').html('<pre>' + output + '</pre>');
 }
