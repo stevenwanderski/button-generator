@@ -375,11 +375,13 @@ Button.generate_style_markup = function(){
     }
   });
 
+  // remove text-decoration
+  Button.styles_markup += Button.render_style_line('text-decoration', 'none');
+
   // wrap the style markups in proper css calls
   Button.styles_markup = '.btn {\n' + Button.styles_markup + '}';
-  if(Button.styles_hover_markup != ''){
-    Button.styles_hover_markup = '\n\n.btn:hover {\n' + Button.styles_hover_markup + '}';
-  }
+  Button.styles_hover_markup += Button.render_style_line('text-decoration', 'none');
+  Button.styles_hover_markup = '\n\n.btn:hover {\n' + Button.styles_hover_markup + '}';
 }
 
 /**
