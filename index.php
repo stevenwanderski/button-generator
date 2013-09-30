@@ -430,13 +430,13 @@
   <footer>
     <div class="inner cf">
       <div class="left company">
-        <h4><img src="/images/icon_star3.png" alt=""> bxCreative</h4>
-        <p>Chicago, IL &bull; <?php print date('Y'); ?></p>
+        <h4><img src="/images/icon_star3.png" alt="">Steven Wanderski</h4>
+        <p><a href="http://stevenwanderski.com">Chicago Ruby on Rails developer</a></p>
       </div>
 
-      <div class="left community">
-        <h4>bxCommunity</h4>
-        <p><a href="http://bxslider.com" target="_blank">bxslider.com</a> <span class="bullet">&bull;</span> <a href="http://bxcreative.com">bxcreative</a> <span class="bullet">&bull;</span> <a href="http://bxcollective.com">bxcollective.com</a></p>
+      <div class="left company">
+        <h4><img src="/images/icon_star3.png" alt="">bxSlider</h4>
+        <p><a href="http://bxslider.com" target="_blank">Responsive jQuery image slider</a></p>
       </div>
     </div>
   </footer>

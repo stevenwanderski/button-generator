@@ -199,7 +199,7 @@ footer .inner {
 }
 
 footer a {
-	color: #454545;
+	color: #3498db;
 }
 
 footer a:hover {
@@ -225,7 +225,7 @@ footer h4 img {
 	vertical-align: top;
 	position: relative;
 	top: 3px;
-	margin-right: 4px;
+	margin-right: 8px;
 }
 
 footer .company p {
@@ -493,60 +493,6 @@ a.more-link {
 	position: relative;
 }
 
-/*------------- FOOTER -------------*/
-
-#footer {
-	background: url(../images/bg_footer.png);
-	height: 213px;
-}
-
-#footer-inner {
-	width: 960px;
-	margin: 0 auto;
-	padding-top: 50px;
-	padding-bottom: 80px;
-}
-
-#footer h4 {
-	font-family: ChunkFiveRegular;
-	font-size: 26px;
-	color: #f9984a;
-	text-shadow: #222 1px 2px 1px;
-	padding-bottom: 5px;
-	font-weight: normal;
-	letter-spacing: .5px;
-}
-
-#footer h4 a {
-	color: #fc0071;
-	text-decoration: none;
-}
-
-#footer h4 a:hover {
-	border-bottom: dotted #f9984a 1px;
-}
-
-#footer li {
-	list-style: none;
-	float: left;
-	background: url(../images/bg_footer_separator.png) no-repeat right 3px;
-	padding-right: 12px;
-	margin-right: 7px;
-}
-
-#footer li:last-child {
-	background: none;
-}
-
-#footer li a {
-	color: #fff;
-	text-decoration: none;
-	font-size: 14px;
-}
-
-#footer li a:hover {
-	border-bottom: dotted #fff 1px;
-}
 
 
 
