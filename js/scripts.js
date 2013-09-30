@@ -301,6 +301,7 @@ Button.generate_style_markup = function(){
   var gradient_start, gradient_end;
   if((gradient_start = Button.styles['bg-start-gradient']) &&
      (gradient_end = Button.styles['bg-end-gradient'])){
+    Button.styles_markup += Button.render_style_line('background', gradient_start);
     Button.styles_markup += Button.render_style_line('background-image', '-webkit-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
     Button.styles_markup += Button.render_style_line('background-image', '-moz-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
     Button.styles_markup += Button.render_style_line('background-image', '-ms-linear-gradient(top, ' + gradient_start + ', ' + gradient_end + ')');
@@ -315,6 +316,7 @@ Button.generate_style_markup = function(){
   var gradient_hover_start, gradient_hover_end;
   if((gradient_hover_start = Button.styles['bg-start-gradient-hover']) &&
      (gradient_hover_end = Button.styles['bg-end-gradient-hover'])){
+    Button.styles_hover_markup += Button.render_style_line('background', gradient_hover_start);
     Button.styles_hover_markup += Button.render_style_line('background-image', '-webkit-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
     Button.styles_hover_markup += Button.render_style_line('background-image', '-moz-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
     Button.styles_hover_markup += Button.render_style_line('background-image', '-ms-linear-gradient(top, ' + gradient_hover_start + ', ' + gradient_hover_end + ')');
