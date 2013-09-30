@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>CSS Button Generator</title>
+  <link rel="shortcut icon" href="images/icon_star1.png" type="image/x-icon" />
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/js/colorpicker/css/colorpicker.css" type="text/css" />
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
@@ -12,6 +13,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="js/colorpicker/js/colorpicker.js" type="text/javascript"></script>
+  <script src="js/jquery.zclip.min.js"></script>
   <!-- <script src="js/spectrum.js"></script> -->
   <script src="js/scripts.js" type="text/javascript"></script>
 </head>
@@ -19,7 +21,7 @@
 
   <header>
     <div class="inner cf">
-      <div class="logo"><img src="/images/icon_star1.png" alt=""><a href="/">CSS Button Generator</a></div>
+      <div class="logo"><img src="/images/icon_star1.png" alt="">CSS Button Generator</div>
     </div>
   </header>
 
@@ -416,7 +418,7 @@
       </div><!-- end button-wrap -->
 
       <div id="styles-wrap">
-        <h2>CSS code</h2>
+        <h2><a href="" class="copy">Copy the code</a> <span class="copy-success">Copied!</span></h2>
         <div id="styles-wrap-inner">
           <div id="css-display"></div>
         </div><!-- end styles-wrap-inner -->

@@ -14,6 +14,18 @@ $(function(){
   Button.initialize_controls();
   Button.update_styles();
 
+  $('.copy').zclip({
+    path: 'js/ZeroClipboard.swf',
+    copy: function(){
+      return $('#css-display').text();
+    },
+    afterCopy: function(){
+      $('.copy-success').fadeIn(200, function(){
+        $(this).fadeOut(1000);
+      });
+    }
+  });
+
 });
 
 /**
@@ -106,6 +118,7 @@ Button.attach_handlers = function(){
   $('.btn').click(function(e){
     e.preventDefault();
   });
+
 }
 
 /**
@@ -117,6 +130,9 @@ Button.initialize_controls = function(){
   });
   $('#settings-wrap [data-control-display]:checked').each(function(){
     Button.control_display_change($(this));
+  });
+  $('.color-view').each(function(){
+    $(this).css('background-color', $(this).prev().val());
   });
 }
 
@@ -198,7 +214,7 @@ Button.prepare_styles = function(){
   Button.styles_markup = '';
   Button.styles_hover_markup = '';
 
-  $('input[type="text"], select').not(':disabled').each(function(){
+  $('#settings-wrap').find('input[type="text"], select').not(':disabled').each(function(){
     var css_property = $(this).attr('id');
     Button.styles[css_property] = $(this).val();
   });
@@ -371,7 +387,6 @@ Button.generate_style_markup = function(){
  */
 Button.render_styles = function(){
   var output = Button.styles_markup + Button.styles_hover_markup;
-  console.log(output);
   var style_tag = '<style id="dynamic-styles" type="text/css">' + output + '</style>';
   $('#dynamic-styles').replaceWith(style_tag);
   $('#css-display').html('<pre>' + output + '</pre>');

@@ -81,6 +81,21 @@ h1 a:hover {
 
 h2 {
 	margin-bottom: 14px;
+	position: relative;
+}
+
+h2 a {
+	/*font-weight: normal;*/
+}
+
+h2 a.hover {
+	text-decoration: underline;
+}
+
+h2 span {
+	color: #27ae60;
+	font-weight: normal;
+	display: none;
 }
 
 a {
@@ -133,18 +148,13 @@ header .inner {
 	padding: 0 20px;
 }
 
-header a {
-	color: #454545;
-	-moz-transition: color 0.15s ease-in-out 0s;
-	-webkit-transition: color 0.15s ease-in-out 0s;
-}
-
 header a:hover {
 	color: #de3329;
 	text-decoration: none;
 }
 
 header .logo {
+	color: #454545;
 	font-size: 32px;
 	margin-top: 20px;
 	float: left;
