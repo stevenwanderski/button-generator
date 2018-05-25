@@ -493,14 +493,8 @@ a.more-link {
 	position: relative;
 }
 
-
-
-
-
-
-
-
-
-
-
-
+.copy {
+  color: #3498db;
+  cursor: pointer;
+  display: inline-block;
+}

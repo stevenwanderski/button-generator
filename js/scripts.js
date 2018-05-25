@@ -14,16 +14,12 @@ $(function(){
   Button.initialize_controls();
   Button.update_styles();
 
-  $('.copy').zclip({
-    path: 'js/ZeroClipboard.swf',
-    copy: function(){
-      return $('#css-display').text();
-    },
-    afterCopy: function(){
-      $('.copy-success').fadeIn(200, function(){
-        $(this).fadeOut(1000);
-      });
-    }
+  var clipboard = new ClipboardJS('.copy');
+
+  clipboard.on('success', function(e) {
+    $('.copy-success').fadeIn(200, function(){
+      $(this).fadeOut(1000);
+    });
   });
 
 });
